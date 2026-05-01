@@ -4,6 +4,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import os
+import gdown
 
 # ── PAGE CONFIG ────────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -16,8 +17,12 @@ st.set_page_config(
 def load_data():
     CSV_FILE = 'US_Accidents_March23_sampled_500k.csv'
     if not os.path.exists(CSV_FILE):
-        st.error("CSV file not found. Make sure US_Accidents_March23_sampled_500k.csv is in the same folder.")
-        st.stop()
+        with st.spinner("Downloading dataset from Google Drive..."):
+            gdown.download(
+                id='1Pj4fQZKLSzqtkvZE_nmep8FqtI_aiai5',
+                output=CSV_FILE,
+                quiet=False
+            )
 
     KEEP_COLS = [
         'ID', 'Severity', 'Start_Time',
